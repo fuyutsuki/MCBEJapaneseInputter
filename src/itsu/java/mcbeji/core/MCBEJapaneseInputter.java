@@ -19,6 +19,7 @@ import java.util.logging.LogManager;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -34,11 +35,10 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
 	private JTextField field;
 	
 	private PopupMenu menu;
+	private MenuItem item1;
 	private MenuItem item;
 	
 	private Robot robot;
-	
-	private boolean focus = false;
     
     public MCBEJapaneseInputter() {
     	try {
@@ -59,6 +59,13 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
 	        
 	        button = new JButton("終了");
 	        button.setBounds(490, 10, 100, 20);
+	        button.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                System.exit(0);
+	            }
+	        });
+	        
 	        frame.getContentPane().add(button);
 	        
 	        field = new JTextField();
@@ -89,6 +96,14 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
 	        
 	        menu = new PopupMenu();
 	        
+	        item1 = new MenuItem("開く                           ");
+	        item1.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                frame.setVisible(true);
+	            }
+	        });
+	        
 	        item = new MenuItem("終了                           ");
 	        item.addActionListener(new ActionListener() {
 	            @Override
@@ -97,6 +112,7 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
 	            }
 	        });
 	        
+	        menu.add(item1);
 	        menu.add(item);
 	        
 	        BufferedImage iconImage = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Icon.png"));
@@ -108,7 +124,10 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
 	        TrayIcon icon = new TrayIcon(image);
 	        icon.setPopupMenu(menu);
 	        SystemTray.getSystemTray().add(icon);
-        
+	        
+	        Toolkit.getDefaultToolkit().beep();
+	        JOptionPane.showMessageDialog(new JFrame(), "起動しました。\n「t」「Enter」「/」のうち、いずれかのキーを押す、もしくはタスクバーのアイコンを右クリックして「開く」を押すとウィンドウが開きます。\nなお、使用時は必ずMCBEのウィンドウ上にこのソフトのウィンドウを置いてください。\n終了するときはウィンドウ上の「終了」ボタン、もしくはタスクバーのアイコンを右クリックして「終了」を選んで終了してください。", "MCBEJapaneseInputter", JOptionPane.INFORMATION_MESSAGE);
+	        
     	} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,7 +160,7 @@ public class MCBEJapaneseInputter implements NativeKeyListener {
     
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-    	if(e.getKeyCode() == NativeKeyEvent.VC_T) {
+    	if(e.getKeyCode() == NativeKeyEvent.VC_T || e.getKeyCode() == NativeKeyEvent.VC_ENTER || e.getKeyCode() == NativeKeyEvent.VC_SLASH) {
     		field.setText("");
     		field.setFocusable(true);
         	frame.setVisible(true);
