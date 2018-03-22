@@ -7,4 +7,4 @@ jarを起動してMCBE Win10 Edをプレイするだけ。
 なお、チャット画面を開いた状態でも同様の操作で開きます。  
   
 ## ダウンロード
-<a href="https://github.com/itsu020402/MCBEJapaneseInputter/raw/master/MCBEJapaneseInputter.jar">https://github.com/itsu020402/MCBEJapaneseInputter/raw/master/MCBEJapaneseInputter.jar</a>  
+<a href="https://github.com/fuyutsuki/MCBEJapaneseInputter/raw/patch/kotlin-fixed/build/libs/MCBEJapaneseInputter-1.0.0.jar">here</a>  
